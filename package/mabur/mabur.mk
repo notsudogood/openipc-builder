@@ -8,8 +8,8 @@
 # mechanics as devourer.mk: buildroot's git backend cannot check out a branch
 # literally named "master" (it refuses to fetch into the branch `git init`
 # already has checked out), so resolve it to a commit id here.
-MABUR_SITE = https://github.com/gilankpam/mabur
-MABUR_BRANCH = master
+MABUR_SITE ?= https://github.com/notsudogood/mabur
+MABUR_BRANCH ?= claude/loving-cori-33yjcg
 MABUR_VERSION := $(shell git ls-remote $(MABUR_SITE) refs/heads/$(MABUR_BRANCH) | cut -f1)
 ifeq ($(MABUR_VERSION),)
 $(error mabur: cannot resolve $(MABUR_BRANCH) at $(MABUR_SITE) (no network?))
