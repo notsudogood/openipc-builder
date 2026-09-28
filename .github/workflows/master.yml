@@ -7,6 +7,13 @@ on:
         description: Platform
         required: false
 
+# The Upload firmware step creates/updates a GitHub release, which needs the
+# token's contents: write. Declared explicitly: a fork's default workflow token
+# is read-only (the first run on this branch built both boards, then died on
+# "403 Resource not accessible by integration" at the release).
+permissions:
+  contents: write
+
 env:
   # Feedback-repair data-gathering branch: a fixed, slash-free release tag
   # (latest-<branch> would carry the branch's slashes into the tag and the
