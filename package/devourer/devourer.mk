@@ -19,12 +19,13 @@
 # This also fixes the old download-cache footgun: buildroot keys dl/ on the
 # version STRING, so a literal "master" meant dl/devourer/devourer-master.tar.gz
 # was reused forever. A SHA that moves with the branch produces a new tarball.
+#
+# Feedback-repair data-gathering build: PINNED to the gilankpam/devourer master
+# commit the 2026-09-27 buildroot-snapshot GS image was built against, and to
+# the same commit as the GS image built from this branch, so both ends run one
+# radio driver.
 DEVOURER_SITE = https://github.com/gilankpam/devourer
-DEVOURER_BRANCH = master
-DEVOURER_VERSION := $(shell git ls-remote $(DEVOURER_SITE) refs/heads/$(DEVOURER_BRANCH) | cut -f1)
-ifeq ($(DEVOURER_VERSION),)
-$(error devourer: cannot resolve $(DEVOURER_BRANCH) at $(DEVOURER_SITE) (no network?))
-endif
+DEVOURER_VERSION = 56eabe4ae32f03992deeee8d0b666a7ce81fc81f
 DEVOURER_SITE_METHOD = git
 DEVOURER_LICENSE = GPL-2.0
 DEVOURER_LICENSE_FILES = LICENSE

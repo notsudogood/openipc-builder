@@ -4,16 +4,15 @@
 #
 ################################################################################
 
-# Tracks master HEAD rather than a fixed SHA. Same reasoning and same
-# mechanics as devourer.mk: buildroot's git backend cannot check out a branch
-# literally named "master" (it refuses to fetch into the branch `git init`
-# already has checked out), so resolve it to a commit id here.
-MABUR_SITE = https://github.com/gilankpam/mabur
-MABUR_BRANCH = master
-MABUR_VERSION := $(shell git ls-remote $(MABUR_SITE) refs/heads/$(MABUR_BRANCH) | cut -f1)
-ifeq ($(MABUR_VERSION),)
-$(error mabur: cannot resolve $(MABUR_BRANCH) at $(MABUR_SITE) (no network?))
-endif
+# Feedback-repair data-gathering build: PINNED, not tracking a branch, so the
+# drone and the ground station (sbc-groundstations, same branch name) carry
+# the identical mabur commit -- a mismatched pair has no control link and no
+# video (mabur CLAUDE.md, "Deploy is two devices"). The commit is
+# gilankpam/mabur c8f9863 + the phase-1 feedback-repair shadow mode
+# (docs/feedback-repair-rollout.md) on notsudogood/mabur branch
+# claude/wifi-fpv-link-architecture-1bms9l. The drone side is unchanged by it.
+MABUR_SITE = https://github.com/notsudogood/mabur
+MABUR_VERSION = 52c3e0945af017c3b022f21366cef651b667858d
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
