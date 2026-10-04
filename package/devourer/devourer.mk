@@ -20,12 +20,14 @@
 # version STRING, so a literal "master" meant dl/devourer/devourer-master.tar.gz
 # was reused forever. A SHA that moves with the branch produces a new tarball.
 #
-# Feedback-repair data-gathering build: PINNED to the gilankpam/devourer master
-# commit the 2026-09-27 buildroot-snapshot GS image was built against, and to
-# the same commit as the GS image built from this branch, so both ends run one
-# radio driver.
-DEVOURER_SITE = https://github.com/gilankpam/devourer
-DEVOURER_VERSION = 56eabe4ae32f03992deeee8d0b666a7ce81fc81f
+# Feedback-repair build, rollout phase 2: PINNED to notsudogood/devourer branch
+# claude/wifi-fpv-link-architecture-1bms9l -- gilankpam/devourer master
+# 56eabe4 (what the phase-1 images ran) plus per-packet hardware TX queue
+# selection (TxMode::hw_queue), which the turnaround bench drives. The GS image
+# built from this branch pins the same commit, so both ends run one radio
+# driver.
+DEVOURER_SITE = https://github.com/notsudogood/devourer
+DEVOURER_VERSION = cae7ce20b92f5d34dee1e08eb7eaf3f1b566320c
 DEVOURER_SITE_METHOD = git
 DEVOURER_LICENSE = GPL-2.0
 DEVOURER_LICENSE_FILES = LICENSE
