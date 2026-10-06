@@ -8,12 +8,14 @@
 # drone and the ground station (sbc-groundstations, same branch name) carry
 # the identical mabur commit -- a mismatched pair has no control link and no
 # video (mabur CLAUDE.md, "Deploy is two devices"). The commit is
-# gilankpam/mabur c8f9863 + the feedback-repair rollout phases 1 and 2
+# gilankpam/mabur c8f9863 + the feedback-repair rollout phases 1-3
 # (docs/feedback-repair-rollout.md) on notsudogood/mabur branch
 # claude/wifi-fpv-link-architecture-1bms9l. Phase 2 adds the drone's
 # turnaround responder (T_TA_PONG, CAP_TURNAROUND), idle unless the GS pings.
+# Phase 3 adds the listen window (T_STATUS/T_LWSTAT, CAP_LISTEN): a quiet gap
+# after each burst, kept only while the GS's [listen] sends statuses.
 MABUR_SITE = https://github.com/notsudogood/mabur
-MABUR_VERSION = 8b4ab10e99d7cda7520b906bd9fa47e9e73d5362
+MABUR_VERSION = b442ac3465c3b54107a0e0ad24293ee034299417
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
