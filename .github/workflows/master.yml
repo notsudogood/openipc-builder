@@ -18,7 +18,7 @@ env:
   # Feedback-repair data-gathering branch: a fixed, slash-free release tag
   # (latest-<branch> would carry the branch's slashes into the tag and the
   # download URL). customizer.sh's sysupgrade URL points at this tag.
-  TAG_NAME: feedback-repair-listen
+  TAG_NAME: feedback-repair-listen-3b
 
 jobs:
   buildroot:

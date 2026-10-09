@@ -14,8 +14,14 @@
 # turnaround responder (T_TA_PONG, CAP_TURNAROUND), idle unless the GS pings.
 # Phase 3 adds the listen window (T_STATUS/T_LWSTAT, CAP_LISTEN): a quiet gap
 # after each burst, kept only while the GS's [listen] sends statuses.
+# Phase 3b (drone only) moves that window to where the statuses land (a
+# learned delay, a fit rule before the next AU) and sends T_LWSTAT v2. It is
+# the one deliberate exception to the identical-commit rule above: it pairs
+# with the phase-3 GS (sbc-groundstations at mabur b442ac3) -- same
+# RC_VERSION, and v2 keeps v1's body and CRC offset, so that GS still parses
+# and exports it.
 MABUR_SITE = https://github.com/notsudogood/mabur
-MABUR_VERSION = b442ac3465c3b54107a0e0ad24293ee034299417
+MABUR_VERSION = 80f3bac7c60698e0d3b64bb6ebf3addcd740816c
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
