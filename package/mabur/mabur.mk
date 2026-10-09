@@ -4,24 +4,21 @@
 #
 ################################################################################
 
-# Feedback-repair data-gathering build: PINNED, not tracking a branch, so the
-# drone and the ground station (sbc-groundstations, same branch name) carry
-# the identical mabur commit -- a mismatched pair has no control link and no
-# video (mabur CLAUDE.md, "Deploy is two devices"). The commit is
-# gilankpam/mabur c8f9863 + the feedback-repair rollout phases 1-3
-# (docs/feedback-repair-rollout.md) on notsudogood/mabur branch
-# claude/wifi-fpv-link-architecture-1bms9l. Phase 2 adds the drone's
-# turnaround responder (T_TA_PONG, CAP_TURNAROUND), idle unless the GS pings.
-# Phase 3 adds the listen window (T_STATUS/T_LWSTAT, CAP_LISTEN): a quiet gap
-# after each burst, kept only while the GS's [listen] sends statuses.
-# Phase 3b (drone only) moves that window to where the statuses land (a
-# learned delay, a fit rule before the next AU) and sends T_LWSTAT v2. It is
-# the one deliberate exception to the identical-commit rule above: it pairs
-# with the phase-3 GS (sbc-groundstations at mabur b442ac3) -- same
-# RC_VERSION, and v2 keeps v1's body and CRC offset, so that GS still parses
-# and exports it.
+# Efficient-link build: PINNED, not tracking a branch, so the drone and the
+# ground station (sbc-groundstations, same branch name) carry the identical
+# mabur commit -- a mismatched pair has no control link and no video (mabur
+# CLAUDE.md, "Deploy is two devices"). The commit is gilankpam/mabur c8f9863 +
+# the parked feedback-repair rollout (docs/feedback-repair-rollout.md: arq.log,
+# the turnaround bench, the listen window -- all idle unless the GS turns them
+# on) + the efficient-link plan (docs/efficient-link-plan.md) on
+# notsudogood/mabur branch claude/wifi-fpv-link-architecture-1bms9l.
+# 1bf5d9b adds genlock: the drone trims its camera's frame rate (by at most
+# 1%) to the GS screen's refresh when the GS sends T_GENLOCK. Off unless
+# [genlock] enable = true in /etc/mabur.toml (absent = off); the debug verb
+# `sensor_mfps` on 127.0.0.1:8301 is the bench probe. New type inside
+# RC_VERSION 11, so a mixed pair still links.
 MABUR_SITE = https://github.com/notsudogood/mabur
-MABUR_VERSION = 80f3bac7c60698e0d3b64bb6ebf3addcd740816c
+MABUR_VERSION = 1bf5d9b02d4d754902c9dbe2732a6bc67233e1b9
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
