@@ -8,17 +8,19 @@
 # ground station (sbc-groundstations, same branch name) carry the identical
 # mabur commit -- a mismatched pair has no control link and no video (mabur
 # CLAUDE.md, "Deploy is two devices"). The commit is gilankpam/mabur c8f9863 +
-# the parked feedback-repair rollout (docs/feedback-repair-rollout.md: arq.log,
-# the turnaround bench, the listen window -- all idle unless the GS turns them
-# on) + the efficient-link plan (docs/efficient-link-plan.md) on
-# notsudogood/mabur branch claude/wifi-fpv-link-architecture-1bms9l.
-# 1bf5d9b adds genlock: the drone trims its camera's frame rate (by at most
-# 1%) to the GS screen's refresh when the GS sends T_GENLOCK. Off unless
-# [genlock] enable = true in /etc/mabur.toml (absent = off); the debug verb
-# `sensor_mfps` on 127.0.0.1:8301 is the bench probe. New type inside
-# RC_VERSION 11, so a mixed pair still links.
+# the efficient-link plan (docs/efficient-link-plan.md) on notsudogood/mabur
+# branch claude/wifi-fpv-link-architecture-1bms9l, with gilankpam/mabur
+# slice-salvage 4c66e11 merged in (2026-10-10, mabur 68d22ce): H.265 row
+# slices ([venc] slices = 4), the software NACK answers ([nack]; re-sends on
+# the voice queue), link pairing (/etc/mabur.key, missing = built-in default)
+# and the channel set ([radio] channels). RC_VERSION 15: pair only with a GS
+# on the same commit. The merge also changed /etc/mabur.toml's keys (vtx_id,
+# channel and follow_gs are gone) and the parser rejects unknown ones, so an
+# edited copy kept in the overlay fails boot: restore it with
+# `cp /rom/etc/mabur.toml /etc/mabur.toml` and re-apply edits. Genlock as
+# before (T_GENLOCK now tagged), off unless [genlock] enable = true.
 MABUR_SITE = https://github.com/notsudogood/mabur
-MABUR_VERSION = 1bf5d9b02d4d754902c9dbe2732a6bc67233e1b9
+MABUR_VERSION = 68d22ce1ca36cea2753748082f17b9c73aed62b8
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
