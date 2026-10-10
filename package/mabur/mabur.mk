@@ -19,8 +19,13 @@
 # edited copy kept in the overlay fails boot: restore it with
 # `cp /rom/etc/mabur.toml /etc/mabur.toml` and re-apply edits. Genlock as
 # before (T_GENLOCK now tagged), off unless [genlock] enable = true.
+# ac9d433 (drone only) fixes genlock's sensor trim: it compared the camera
+# mode's MAXIMUM rate (90 on the IMX415's 1080p mode) with the running rate
+# (60) and refused every setpoint silently. The deliberate exception to the
+# identical-commit rule: the GS stays on 68d22ce (sbc-groundstations
+# efficient-link-nack-gs), wire and GS code unchanged by it.
 MABUR_SITE = https://github.com/notsudogood/mabur
-MABUR_VERSION = 68d22ce1ca36cea2753748082f17b9c73aed62b8
+MABUR_VERSION = ac9d4337c95107c2fe860181f69213ddddfafa5f
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO

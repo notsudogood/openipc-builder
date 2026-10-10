@@ -6,7 +6,7 @@
 # Set custom upgrade url -- THIS fork's release, not upstream OpenIPC's: the
 # upstream ssc338q_fpv_emax-wyvern-link image is stock majestic + wfb-ng, so a
 # sysupgrade pulling it would silently replace maburd.
-fw_setenv upgrade 'https://github.com/notsudogood/openipc-builder/releases/download/efficient-link-nack/ssc338q_fpv_emax-wyvern-link-alpha-nor.tgz'
+fw_setenv upgrade 'https://github.com/notsudogood/openipc-builder/releases/download/efficient-link-nack-d2/ssc338q_fpv_emax-wyvern-link-alpha-nor.tgz'
 
 # Boot-time settings, shipped in the image so a device does not need them
 # typed in by hand.  Measured in docs/boot-time-findings-2026-09-07.md
