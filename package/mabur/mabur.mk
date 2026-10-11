@@ -19,14 +19,14 @@
 # edited copy kept in the overlay fails boot: restore it with
 # `cp /rom/etc/mabur.toml /etc/mabur.toml` and re-apply edits. Genlock as
 # before (T_GENLOCK now tagged), off unless [genlock] enable = true.
-# cbd139f (drone + GS, back on one commit; includes ac9d433's genlock
-# sensor-trim fix): NACK for the enhancement layer (second retx ring, both
-# layers on the one air_pct bucket; [nack] enh, default on) and maburcal
-# sweeps the flight frame (LDPC/STBC on). No new required config keys: an
-# edited /etc/mabur.toml from the previous build still boots. RC_VERSION
-# stays 15.
+# dfb1aaa (2026-10-11): per-rung airtime budget and bitrate cap
+# ([[encoder.rung]]) and the encoder floor lowered to 300 kbps. Includes the
+# GS-only d0425d1 (the GS image runs that commit; no wire change, RC_VERSION
+# stays 15, so the pair still links). The new keys are optional: an edited
+# /etc/mabur.toml from the previous build still boots and behaves as before
+# until the [[encoder.rung]] tables are added to it.
 MABUR_SITE = https://github.com/notsudogood/mabur
-MABUR_VERSION = cbd139f229b7065fe52982da39a5e699ebed768b
+MABUR_VERSION = dfb1aaae7c757afc2d2e443a2871a1517894b074
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
