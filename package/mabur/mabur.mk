@@ -25,8 +25,13 @@
 # stays 15, so the pair still links). The new keys are optional: an edited
 # /etc/mabur.toml from the previous build still boots and behaves as before
 # until the [[encoder.rung]] tables are added to it.
+# 057decf (2026-10-13): drone core-placement knobs for the 40+ Mb/s CPU bench --
+# fec.worker_core ("rest" default | "hot") and radio.tx_threads_hot (0
+# default); both default to the old placement, so an edited /etc/mabur.toml
+# boots and behaves as before. Also carries the GS-only load diet (3b1d509);
+# no wire change, RC_VERSION 15.
 MABUR_SITE = https://github.com/notsudogood/mabur
-MABUR_VERSION = dfb1aaae7c757afc2d2e443a2871a1517894b074
+MABUR_VERSION = 057decfc776ef7740b521efd9a90d1408c74700c
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
