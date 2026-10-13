@@ -30,8 +30,13 @@
 # default); both default to the old placement, so an edited /etc/mabur.toml
 # boots and behaves as before. Also carries the GS-only load diet (3b1d509);
 # no wire change, RC_VERSION 15.
+# 2ed0441 (2026-10-13, drone CPU cut): the start-code scans jump between zero
+# bytes (memchr) instead of testing every byte, the sub-block CRC16 runs
+# 8 bytes per step (slicing-by-8), and fec.worker_spin (default unchanged)
+# bounds the FEC worker's idle spin. Same output; an edited /etc/mabur.toml
+# boots unchanged. No wire change, RC_VERSION 15.
 MABUR_SITE = https://github.com/notsudogood/mabur
-MABUR_VERSION = 057decfc776ef7740b521efd9a90d1408c74700c
+MABUR_VERSION = 2ed0441860fb9a2699ea9bd62f68d3e6c69d9b17
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
