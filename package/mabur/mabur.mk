@@ -35,8 +35,14 @@
 # 8 bytes per step (slicing-by-8), and fec.worker_spin (default unchanged)
 # bounds the FEC worker's idle spin. Same output; an edited /etc/mabur.toml
 # boots unchanged. No wire change, RC_VERSION 15.
+# fc033f6 (2026-10-14): merges gilang/master (slice-by-slice streamed decode
+# on the GS) and adds the 80 MHz linkbench tooling; linkbench-tx now ships
+# in /usr/bin (below). WIRE FLAG DAY: FrameHdr byte 3 is slice_rows (was a
+# constant codec id) and RC_VERSION stays 15, so a mismatched pair does not
+# refuse, it misassembles. Pair ONLY with sbc-groundstations
+# efficient-link-nack-gs7. An edited /etc/mabur.toml boots unchanged.
 MABUR_SITE = https://github.com/notsudogood/mabur
-MABUR_VERSION = 2ed0441860fb9a2699ea9bd62f68d3e6c69d9b17
+MABUR_VERSION = fc033f6712c0fc89594011f7297caf2814cc473e
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
@@ -70,14 +76,17 @@ MABUR_DEPENDENCIES = libusb host-pkgconf devourer
 # (Config.in), where build-arm.sh is always the 8822E -- the bench drone's
 # card. Exactly one of the two is ON.
 #
-# MABUR_BUILD_GS/LINKBENCH=OFF: this is the drone image. maburgs and the bench
-# harnesses are neither installed nor useful on the SSC338Q.
+# MABUR_BUILD_GS=OFF: this is the drone image; maburgs is not useful on the
+# SSC338Q. MABUR_BUILD_LINKBENCH=ON (since d7) for linkbench-tx, the drone
+# half of the 80 MHz bench (mabur docs/bw80-research-2026-10-12.md). It
+# links its own copy of devourer: ~1 MB unpacked on a rootfs that was
+# 5.5 MB in d6 (16 MB NOR).
 MABUR_CONF_OPTS = \
 	-DDEVOURER_DIR=$(DEVOURER_DIR) \
 	-DMABUR_BUILD_TESTS=OFF \
 	-DMABUR_BUILD_DRONE=ON \
 	-DMABUR_BUILD_GS=OFF \
-	-DMABUR_BUILD_LINKBENCH=OFF \
+	-DMABUR_BUILD_LINKBENCH=ON \
 	-DBUILD_SHARED_LIBS=OFF \
 	-DDEVOURER_LOG_MAX_LEVEL=WARN \
 	-DDEVOURER_JAGUAR1=OFF \
@@ -106,6 +115,7 @@ endif
 # repo (tests/test_config.cpp pins it), not only on the device.
 define MABUR_INSTALL_TARGET_CMDS
 	$(INSTALL) -D -m 0755 $(MABUR_BUILDDIR)/drone/maburd $(TARGET_DIR)/usr/bin/maburd
+	$(INSTALL) -D -m 0755 $(MABUR_BUILDDIR)/bench/linkbench/linkbench-tx $(TARGET_DIR)/usr/bin/linkbench-tx
 	# Installed as S00mabur, not S96mabur: busybox rcS runs /etc/init.d/S*
 	# strictly serially in lexical order, and maburd goes FIRST -- ahead of
 	# seedrng, syslogd, fake-hwclock, sysctl, customizer, mdev, network, ntpd,
