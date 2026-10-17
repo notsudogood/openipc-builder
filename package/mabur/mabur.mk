@@ -41,8 +41,14 @@
 # constant codec id) and RC_VERSION stays 15, so a mismatched pair does not
 # refuse, it misassembles. Pair ONLY with sbc-groundstations
 # efficient-link-nack-gs7. An edited /etc/mabur.toml boots unchanged.
+# 9f2029e (2026-10-17): 80 MHz top rungs (VHT MCS3/80 at 35 Mb/s, MCS4/80 at
+# 50 Mb/s); the default /etc/mabur.toml is now radio.width = 80 on channels
+# [36, 132]. maburcal keeps a no-dip rate at its pre-calibration power. An
+# old /etc/mabur.toml still boots (it stays at 40 MHz, and an 80 MHz rung
+# then flies at 40): flash with sysupgrade -n to take the new defaults.
+# Pair with sbc-groundstations efficient-link-nack-gs8.
 MABUR_SITE = https://github.com/notsudogood/mabur
-MABUR_VERSION = fc033f6712c0fc89594011f7297caf2814cc473e
+MABUR_VERSION = 9f2029e3542b6a1fbc6be4cf14df689ec18b7771
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
