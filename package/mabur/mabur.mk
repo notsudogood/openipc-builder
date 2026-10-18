@@ -48,7 +48,11 @@
 # then flies at 40): flash with sysupgrade -n to take the new defaults.
 # Pair with sbc-groundstations efficient-link-nack-gs8.
 MABUR_SITE = https://github.com/notsudogood/mabur
-MABUR_VERSION = 9f2029e3542b6a1fbc6be4cf14df689ec18b7771
+# e246f8c (2026-10-18): diagnosis build for the 80 MHz hop fault -- maburd
+# logs the radio's real tuned centre and the FastRetune time after every
+# retune, re-reads it every 5 s (stats rfc= / rf_bad=). No config change:
+# flash WITHOUT -n to keep the bench /etc/mabur.toml.
+MABUR_VERSION = e246f8c66b955497dafc2762d47dbe7e7eadaf55
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
