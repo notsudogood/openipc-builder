@@ -52,14 +52,14 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # logs the radio's real tuned centre and the FastRetune time after every
 # retune, re-reads it every 5 s (stats rfc= / rf_bad=). No config change:
 # flash WITHOUT -n to keep the bench /etc/mabur.toml.
-# e89faf7 (2026-10-19): Gilang's master merged -- the boot sensor trim and
+# bd8f323 (2026-10-19, e89faf7 + the 8812EU build fix): Gilang's master merged -- the boot sensor trim and
 # the phase-lock offset from the RCF (venc sensor_cal/sensor_steer), demand
 # refresh (venc.gop_s 0: no periodic key frames, the GS asks on damage) --
 # and our genlock retired ([genlock] in an old config is ignored). Keeps
 # d9's tuned-centre readout. RC_VERSION 16 flag day: pair ONLY with
 # sbc-groundstations efficient-link-nack-gs9, and flash with sysupgrade -n
 # so the new defaults (gop_s 0) are taken.
-MABUR_VERSION = e89faf757c6b8f785af2fe258d901168637058a2
+MABUR_VERSION = bd8f323be9e2e74b229d54aa825afc76a9a86cd9
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
