@@ -27,7 +27,11 @@
 # built from this branch pins the same commit, so both ends run one radio
 # driver.
 DEVOURER_SITE = https://github.com/notsudogood/devourer
-DEVOURER_VERSION = cae7ce20b92f5d34dee1e08eb7eaf3f1b566320c
+# 3524f4c (2026-10-20, d11): the batched channel set (FastSetChannel; width
+# switches and full-set hops in ~60 USB round trips instead of ~190 on the
+# 8822E, parity-proven offline incl. spur channels and 10 MHz), 80 MHz on any
+# primary of its block, VHT 1SS rates following the HT power diffs.
+DEVOURER_VERSION = 3524f4c6903f44bb61a7be0bcf7d36d3da948db4
 DEVOURER_SITE_METHOD = git
 DEVOURER_LICENSE = GPL-2.0
 DEVOURER_LICENSE_FILES = LICENSE

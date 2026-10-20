@@ -59,7 +59,15 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # d9's tuned-centre readout. RC_VERSION 16 flag day: pair ONLY with
 # sbc-groundstations efficient-link-nack-gs9, and flash with sysupgrade -n
 # so the new defaults (gop_s 0) are taken.
-MABUR_VERSION = bd8f323be9e2e74b229d54aa825afc76a9a86cd9
+# 20a1ccb (2026-10-20, d11): the backlog build. Drone radio comes up at 40 MHz
+# and steps to 80 only for the 80 MHz rungs (radio.width_step), hops at 80 use
+# the full channel set (radio.fast_hop_at_80 = false), 80 MHz on any primary,
+# channels up to 233, the 10 MHz rung when the GS orders it (bw code 3), the
+# recorder at nice 19 (record.core / low_priority), per-rung encoder fps
+# ([[encoder.rung]] fps, off). RC_VERSION stays 16. The new keys are optional
+# and default to the old behaviour, so flash with sysupgrade -n to take the
+# new defaults. Pair with sbc-groundstations efficient-link-nack-gs10.
+MABUR_VERSION = 20a1ccb1f25da821df23fe4485fabbfc9a0430ad
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
