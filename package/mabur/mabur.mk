@@ -67,7 +67,10 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # ([[encoder.rung]] fps, off). RC_VERSION stays 16. The new keys are optional
 # and default to the old behaviour, so flash with sysupgrade -n to take the
 # new defaults. Pair with sbc-groundstations efficient-link-nack-gs10.
-MABUR_VERSION = 20a1ccb1f25da821df23fe4485fabbfc9a0430ad
+# 1229a24 (2026-10-20): 20a1ccb + a drone-only fix (a failed width switch
+# falls back once instead of recursing). The GS image stays on 20a1ccb: the
+# difference is drone code only, no wire or config change.
+MABUR_VERSION = 1229a244baa8f1517c1cd1d7003d6b37a2f5aa93
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
