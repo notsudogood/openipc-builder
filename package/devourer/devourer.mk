@@ -31,7 +31,11 @@ DEVOURER_SITE = https://github.com/notsudogood/devourer
 # switches and full-set hops in ~60 USB round trips instead of ~190 on the
 # 8822E, parity-proven offline incl. spur channels and 10 MHz), 80 MHz on any
 # primary of its block, VHT 1SS rates following the HT power diffs.
-DEVOURER_VERSION = 3524f4c6903f44bb61a7be0bcf7d36d3da948db4
+# 097c527 (2026-10-21, d12, a data build): LastChannelSetStats -- each
+# channel set's time split into lock wait, priming read, write batches,
+# single round trips and post-set re-asserts -- and the lean width switch
+# (tuning.lean_width, off unless mabur's radio.lean_width).
+DEVOURER_VERSION = 097c527e8417bc4a1fab0d0818e528a85b5dc724
 DEVOURER_SITE_METHOD = git
 DEVOURER_LICENSE = GPL-2.0
 DEVOURER_LICENSE_FILES = LICENSE

@@ -70,7 +70,12 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # 1229a24 (2026-10-20): 20a1ccb + a drone-only fix (a failed width switch
 # falls back once instead of recursing). The GS image stays on 20a1ccb: the
 # difference is drone code only, no wire or config change.
-MABUR_VERSION = 1229a244baa8f1517c1cd1d7003d6b37a2f5aa93
+# f79e871 (2026-10-21, d12, a data build): every width switch and full-set
+# hop logs devourer's time breakdown (a "set:" line); radio.lean_width
+# (false) / radio.lean_verify (true) for the lean width switch. No wire
+# change, RC_VERSION stays 16; the new keys are optional. Pair with
+# sbc-groundstations efficient-link-nack-gs11.
+MABUR_VERSION = f79e8715d5d4442dc76df1d789a7d6f371b6e0cb
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
