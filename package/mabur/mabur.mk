@@ -75,7 +75,12 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # (false) / radio.lean_verify (true) for the lean width switch. No wire
 # change, RC_VERSION stays 16; the new keys are optional. Pair with
 # sbc-groundstations efficient-link-nack-gs11.
-MABUR_VERSION = f79e8715d5d4442dc76df1d789a7d6f371b6e0cb
+# e38241a (2026-10-22, d13): f79e871 + radio.switch_rt_prio (0 = off) --
+# width switches and hops at SCHED_FIFO with the RX thread, the test of
+# whether d12's ~0.5 ms per USB transfer is CPU scheduling. Also carries the
+# GS-only menu fix (4bca44c), which the drone does not build. Pair with
+# sbc-groundstations efficient-link-nack-gs11.
+MABUR_VERSION = e38241a539588d1a40ab5559ecb7ce7553b13efa
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
