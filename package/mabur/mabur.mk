@@ -80,7 +80,13 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # whether d12's ~0.5 ms per USB transfer is CPU scheduling. Also carries the
 # GS-only menu fix (4bca44c), which the drone does not build. Pair with
 # sbc-groundstations efficient-link-nack-gs11.
-MABUR_VERSION = e38241a539588d1a40ab5559ecb7ce7553b13efa
+# a711271 (2026-10-23, d14): e38241a + the stutter A/B switches, all at the
+# old behaviour by default -- radio.carrier_sense ("on"; "off", "no_edcca",
+# "no_primary" for the 40 MHz stall) and link.shed_max_level (3; 1 = a 2 s
+# 30 fps tail instead of 6 s). GS-side pieces (fast fall, promote latency
+# guard) ride the same commit; the drone does not build them. No wire change,
+# RC_VERSION stays 16. Pair with sbc-groundstations efficient-link-nack-gs13.
+MABUR_VERSION = a711271ef6d4c6c8b576e9b60cfa987eed0ade54
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
