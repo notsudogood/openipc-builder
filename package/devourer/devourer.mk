@@ -38,7 +38,9 @@ DEVOURER_SITE = https://github.com/notsudogood/devourer
 # b7084d0 (2026-10-24, d15): 097c527 + the 8822E spur table extension to the
 # 5880 MHz spike (177@20, 173+177@40), behind tuning.spur_ext_8822e (off
 # unless mabur's radio.spur_ext).
-DEVOURER_VERSION = b7084d07eda6a499dc73fae0b5cb4c8f9657377e
+# bcf0b86 (2026-10-24, d16): + Gilang's 8822C 40 MHz inject fix (#484):
+# DISDATAFB=1 on the CU's 40/80 MHz frames and the wide-TX IGI floor.
+DEVOURER_VERSION = bcf0b86b8e353e422fff55cb3f0a8676ca5bbb66
 DEVOURER_SITE_METHOD = git
 DEVOURER_LICENSE = GPL-2.0
 DEVOURER_LICENSE_FILES = LICENSE

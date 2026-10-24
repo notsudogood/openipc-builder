@@ -94,7 +94,10 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # (500 kb/s); top rung 40 Mb/s; radio.spur_warn (on) and radio.spur_ext
 # (off). No wire change, RC_VERSION stays 16. Pair with sbc-groundstations
 # efficient-link-nack-gs14.
-MABUR_VERSION = e474f4142396645d722e48a691a8a32999074dfa
+# f67df19 (2026-10-24, d16): d15 + radio.wide_igi_floor (-1 = the image's
+# default: off on the 8812EU image, 0x35 on the 8812CU/Wyvern one, which
+# needs it for 40 MHz). Pair with sbc-groundstations efficient-link-nack-gs14.
+MABUR_VERSION = f67df19b9988a0c7b0b8c367f2b75c8d0b28601f
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
