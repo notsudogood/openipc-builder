@@ -86,7 +86,15 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # 30 fps tail instead of 6 s). GS-side pieces (fast fall, promote latency
 # guard) ride the same commit; the drone does not build them. No wire change,
 # RC_VERSION stays 16. Pair with sbc-groundstations efficient-link-nack-gs13.
-MABUR_VERSION = a711271ef6d4c6c8b576e9b60cfa987eed0ade54
+# e474f41 (2026-10-24, d15): fresh configs and new defaults. S00mabur
+# refreshes an /etc/mabur.toml edited under an older image once (backup in
+# /root/mabur.toml.oldN, maburcal's calibration lines kept; /etc/mabur.keep
+# opts out); code defaults now match the bundle; channel set
+# [36, 100, 116, 132]; the 10 MHz rung's bitrate capped like MCS0/20
+# (500 kb/s); top rung 40 Mb/s; radio.spur_warn (on) and radio.spur_ext
+# (off). No wire change, RC_VERSION stays 16. Pair with sbc-groundstations
+# efficient-link-nack-gs14.
+MABUR_VERSION = e474f4142396645d722e48a691a8a32999074dfa
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO

@@ -35,7 +35,10 @@ DEVOURER_SITE = https://github.com/notsudogood/devourer
 # channel set's time split into lock wait, priming read, write batches,
 # single round trips and post-set re-asserts -- and the lean width switch
 # (tuning.lean_width, off unless mabur's radio.lean_width).
-DEVOURER_VERSION = 097c527e8417bc4a1fab0d0818e528a85b5dc724
+# b7084d0 (2026-10-24, d15): 097c527 + the 8822E spur table extension to the
+# 5880 MHz spike (177@20, 173+177@40), behind tuning.spur_ext_8822e (off
+# unless mabur's radio.spur_ext).
+DEVOURER_VERSION = b7084d07eda6a499dc73fae0b5cb4c8f9657377e
 DEVOURER_SITE_METHOD = git
 DEVOURER_LICENSE = GPL-2.0
 DEVOURER_LICENSE_FILES = LICENSE
