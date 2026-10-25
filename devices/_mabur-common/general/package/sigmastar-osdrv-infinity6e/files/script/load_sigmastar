@@ -29,7 +29,24 @@ detect_sensor() {
 
 set_sensor() {
 	case $SENSOR in
-		gc2053|gc4653|imx274|imx307|imx335|imx347|imx415|sc501ai|sc8235)
+		imx415)
+			# The GS menu's Camera tab: maburd writes /etc/sensor_star6e when
+			# a preset needs a mode only waybeam_venc's IMX415 driver has
+			# (1728x972@100, 1728x816@120; the .ko is waybeam 0c880d8's,
+			# shipped by this overlay). Stock otherwise, and stock again when
+			# it fails to load -- the flag goes, so the next boot does not
+			# retry it, and maburd rolls the camera switch back.
+			if [ -e /etc/sensor_star6e ] && [ -e $MODULE/sensor_imx415_star6e.ko ]; then
+				if insmod $MODULE/sensor_imx415_star6e.ko chmap=1; then
+					echo "imx415: waybeam star6e driver (/etc/sensor_star6e)" | logger -s -t OpenIPC
+					return
+				fi
+				echo "imx415: star6e driver failed to load, stock driver instead" | logger -s -t OpenIPC
+				rm -f /etc/sensor_star6e
+			fi
+			insmod $MODULE/sensor_imx415_mipi.ko chmap=1
+			;;
+		gc2053|gc4653|imx274|imx307|imx335|imx347|sc501ai|sc8235)
 			insmod $MODULE/sensor_${SENSOR}_mipi.ko chmap=1
 			;;
 		*)
