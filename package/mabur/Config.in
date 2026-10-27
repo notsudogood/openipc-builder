@@ -38,4 +38,13 @@ config BR2_PACKAGE_MABUR_RADIO_8812CU
 
 endchoice
 
+config BR2_PACKAGE_MABUR_MSP_SERIAL
+	string "Flight-controller UART"
+	default "/dev/ttyS2"
+	help
+	  Written into the image's /etc/mabur.toml as [msp] serial, so a
+	  fresh flash (and the config refresh on every new image) reads the
+	  flight controller on the right port. /dev/ttyS2 on the OpenIPC
+	  URLLC AIO; /dev/ttyS3 on the EMAX Wyvern Link Alpha.
+
 endif

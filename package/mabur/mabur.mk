@@ -183,6 +183,11 @@ define MABUR_INSTALL_TARGET_CMDS
 	# of uptime (mabur docs/boot-time-findings-2026-09-07.md, "rcS, stamped").
 	$(INSTALL) -D -m 0755 $(@D)/bundle/S96mabur $(TARGET_DIR)/etc/init.d/S00mabur
 	$(INSTALL) -D -m 0644 $(@D)/bundle/mabur.default.toml $(TARGET_DIR)/etc/mabur.toml
+	# The board's flight-controller UART ([msp] serial, Config.in). The grep
+	# fails the build if the bundle's serial line ever changes shape, rather
+	# than shipping the wrong port silently.
+	$(SED) 's|^serial\([[:space:]]*\)= "[^"]*"|serial\1= "$(call qstrip,$(BR2_PACKAGE_MABUR_MSP_SERIAL))"|' $(TARGET_DIR)/etc/mabur.toml
+	grep -q '^serial[[:space:]]*= "$(call qstrip,$(BR2_PACKAGE_MABUR_MSP_SERIAL))"' $(TARGET_DIR)/etc/mabur.toml
 endef
 
 $(eval $(cmake-package))

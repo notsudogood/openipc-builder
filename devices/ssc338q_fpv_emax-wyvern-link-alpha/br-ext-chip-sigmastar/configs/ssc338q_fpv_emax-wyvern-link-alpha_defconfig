@@ -68,6 +68,8 @@ BR2_PACKAGE_MABUR=y
 # but an RTL8812CU radio (0bda:c812) -- maburd is built with devourer's
 # 8822C alone. Everything else is devices/_mabur-common.
 BR2_PACKAGE_MABUR_RADIO_8812CU=y
+# The Wyvern's flight controller is on ttyS3 (the URLLC AIO's is ttyS2).
+BR2_PACKAGE_MABUR_MSP_SERIAL="/dev/ttyS3"
 BR2_PACKAGE_SIGMASTAR_OSDRV_INFINITY6E=y
 # ipcinfo: called by /etc/init.d/S70vendor and by load_sigmastar.
 BR2_PACKAGE_IPCTOOL=y

@@ -101,7 +101,9 @@ Then on the GS: video on the glass, `maburtop` link panel live,
   Calibrate on the channel flown most: on the CU the walls are exact there
   and only approximate on other channels (mabur `docs/deploy.md`,
   "Supported drone cards").
-- `msp.serial = "/dev/ttyS2"` is the URLLC AIO's FC UART. Unverified on the
-  Wyvern: if the flight controller is wired to another UART, MSP OSD and arm
-  state stay silent (the link still flies, but low-power disarmed mode never
-  sees "armed"). The stock firmware's telemetry config names the right port.
+- `msp.serial = "/dev/ttyS3"`: the Wyvern's flight controller is on ttyS3
+  (operator, 2026-10-27; the URLLC AIO's is ttyS2). Images from this commit
+  on set it (`BR2_PACKAGE_MABUR_MSP_SERIAL` in the board's defconfig); the
+  d16 image still ships ttyS2, so set it by hand there. On the wrong port the
+  MSP OSD and arm state stay silent: the link still flies, and with no arm
+  report for 2 s the drone assumes armed and runs at full rate.
