@@ -40,7 +40,11 @@ DEVOURER_SITE = https://github.com/notsudogood/devourer
 # unless mabur's radio.spur_ext).
 # bcf0b86 (2026-10-24, d16): + Gilang's 8822C 40 MHz inject fix (#484):
 # DISDATAFB=1 on the CU's 40/80 MHz frames and the wide-TX IGI floor.
-DEVOURER_VERSION = bcf0b86b8e353e422fff55cb3f0a8676ca5bbb66
+# a9a54fe (2026-10-30, d17): bcf0b86 + an 8812EU leaving 10 MHz through a
+# full channel set gets its 80M MAC clock and microsecond ticks back (after a
+# 10 MHz trip the GS cards read path-B RSSI -110 and SNR ~0 for the rest of
+# the flight; that the clock caused it is inferred, not bench-confirmed).
+DEVOURER_VERSION = a9a54fe1769d9994e269d9a2a7151e6687de5517
 DEVOURER_SITE_METHOD = git
 DEVOURER_LICENSE = GPL-2.0
 DEVOURER_LICENSE_FILES = LICENSE

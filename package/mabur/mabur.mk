@@ -97,7 +97,19 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # f67df19 (2026-10-24, d16): d15 + radio.wide_igi_floor (-1 = the image's
 # default: off on the 8812EU image, 0x35 on the 8812CU/Wyvern one, which
 # needs it for 40 MHz). Pair with sbc-groundstations efficient-link-nack-gs14.
-MABUR_VERSION = f67df19b9988a0c7b0b8c367f2b75c8d0b28601f
+# 047114e6 (2026-10-30, d17): Gilang's master merged (phase lock pause on a
+# frame-rate mismatch, release thread, uplink delivery %, burned DVR rework),
+# the GS menu's Camera tab and Settings tab (maburcal, remove calibration),
+# menu text without the see-through ring, top rung 45 Mb/s, fast width
+# switch on (drone boost 60 + lean), a hand-set wide_igi_floor kept across
+# images, the 40 MHz stall fix (IGI floor 0x35) on by default on every image,
+# per-core CPU in the telemetry. GS-side pieces ride the same commit: the
+# OSD sidecars written at last and split at arm/disarm, MCS3/80 FEC
+# 0.5/0.25, the edge_per fade rule, the residual multi-rung drop, the
+# penalty fix and the faster climb back. RC_VERSION 17: flash the drone and
+# the GS together. Gilang's firmware also says 17 with a different layout
+# (his MAVLink tunnel): never pair a drone and a GS across the two.
+MABUR_VERSION = 047114e6d42c514d7a543115e1efde3de4c0bfed
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
