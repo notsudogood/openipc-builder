@@ -112,7 +112,13 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # start wipes /etc/mabur.toml to the image default (clean-slate epoch
 # 2026-10-30: no calibration or floor carried, /etc/mabur.keep removed; old
 # copy in /root/mabur.toml.oldN).
-MABUR_VERSION = d3b3bdad21350e0435269e9cce8a95c10bbb3fb3
+# 21c7f33d (2026-10-31, d17 rebuilt): + Gilang's three venc memory fixes
+# (3bad2f7d, 078ed007, 33413023 + f901ee2a's comment): i6_vif_dev to the 52
+# bytes libmi_vif.so copies (a non-zero stack word past it stopped the camera
+# on a warm restart), MI_VENC_RcParam_t to 56 (every rate-control Get wrote 4
+# bytes past its stack struct) and the CUS3A AE status to 65 (17 bytes past a
+# 3A-thread local every tick); the rest pinned with _Static_assert.
+MABUR_VERSION = 21c7f33d20f8f103737895861f16aaa008ef6271
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
