@@ -127,7 +127,10 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # and gs17 alike. The first start refreshes /etc/mabur.toml to the new
 # default as usual (calibration and a hand-set floor carried, old copy in
 # /root/mabur.toml.oldN); no new clean-slate epoch.
-MABUR_VERSION = c60b1621dfd8693f93dde875a599b5964719e50e
+# 36515ba5 (2026-10-31, d18): + low_power.fps = 0: low power keeps the
+# camera's frame rate and drops only the bitrate, so arm/disarm no longer
+# rebind the encoder (flight 0010: a 100-150 ms pause at each disarm).
+MABUR_VERSION = 36515ba5bae9bd461f3b3fca4ca29583fe078d84
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
