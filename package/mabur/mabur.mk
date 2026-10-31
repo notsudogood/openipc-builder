@@ -130,7 +130,13 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # 36515ba5 (2026-10-31, d18): + low_power.fps = 0: low power keeps the
 # camera's frame rate and drops only the bitrate, so arm/disarm no longer
 # rebind the encoder (flight 0010: a 100-150 ms pause at each disarm).
-MABUR_VERSION = 36515ba5bae9bd461f3b3fca4ca29583fe078d84
+# 2fb591eb (2026-10-31, d18): + radio.igi_floor_auto: each drone learns its
+# own 40 MHz stall floor (off -> 0x24 -> 0x2c -> 0x35 on a seen stall, saved
+# to /etc/mabur.igi_floor; needs devourer 925530d's SetWideTxIgiFloor), and
+# venc.sensor_crop / the Camera tab's "Crop 60": 1080p60 from the IMX415's
+# unbinned 2816x1584 crop (waybeam's driver). No wire change; a gs16 GS
+# just does not show the fifth preset.
+MABUR_VERSION = 2fb591ebf74bb4dfd415050d267bd2189180f1d4
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO

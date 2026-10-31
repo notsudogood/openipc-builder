@@ -44,7 +44,10 @@ DEVOURER_SITE = https://github.com/notsudogood/devourer
 # full channel set gets its 80M MAC clock and microsecond ticks back (after a
 # 10 MHz trip the GS cards read path-B RSSI -110 and SNR ~0 for the rest of
 # the flight; that the clock caused it is inferred, not bench-confirmed).
-DEVOURER_VERSION = a9a54fe1769d9994e269d9a2a7151e6687de5517
+# 925530d (2026-10-31, d18): + IRtlRadio::SetWideTxIgiFloor, the wide-TX
+# IGI floor set at runtime (mabur's per-unit learner); the first wide frame
+# now arms the floor whatever its value (0 writes nothing).
+DEVOURER_VERSION = 925530dc4bcbb40f4fe1e77fa7e98ea604bcab99
 DEVOURER_SITE_METHOD = git
 DEVOURER_LICENSE = GPL-2.0
 DEVOURER_LICENSE_FILES = LICENSE
