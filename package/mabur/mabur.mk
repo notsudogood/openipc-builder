@@ -118,7 +118,16 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # on a warm restart), MI_VENC_RcParam_t to 56 (every rate-control Get wrote 4
 # bytes past its stack struct) and the CUS3A AE status to 65 (17 bytes past a
 # 3A-thread local every tick); the rest pinned with _Static_assert.
-MABUR_VERSION = 21c7f33d20f8f103737895861f16aaa008ef6271
+# c60b1621 (2026-10-31, d18): the radio rests at 20 MHz (radio.home_width
+# 20, was 40) so the 40 MHz stall fix's receiver-gain floor is off on the
+# 20 MHz rungs (flight 0009: the uplink failed ~10 dB early and the drone sat
+# 35 s in failsafe), and narrows at once while not linked
+# (radio.narrow_unlinked). GS side (gs17): a hop order in a fade no longer
+# raises the rung (hop.fade_keeps_rung). No wire change: d18 pairs with gs16
+# and gs17 alike. The first start refreshes /etc/mabur.toml to the new
+# default as usual (calibration and a hand-set floor carried, old copy in
+# /root/mabur.toml.oldN); no new clean-slate epoch.
+MABUR_VERSION = c60b1621dfd8693f93dde875a599b5964719e50e
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
