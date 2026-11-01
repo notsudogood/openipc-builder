@@ -144,7 +144,16 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # change: d19 pairs with gs17 and gs18. The bundle changed, so the first
 # start refreshes /etc/mabur.toml once (calibration, a hand-set floor and
 # now the camera preset carried; /etc/mabur.igi_floor untouched).
-MABUR_VERSION = 9821c8175cf2f6c4b646181a1087945809bfcfdc
+# 47649d44 (2026-11-01, d20): a queue-full shed to 30 fps that is not a
+# repeat (none in the 5 s before) lifts 0.5 s after the queue calms instead
+# of 2 s (link.shed_quick_ms = 500; USB failures and repeats keep the 2 s
+# guard), and the bundle's MCS4/80 max_kbps goes back to 40000 (45000 since
+# d17). Operator flight 2026-11-01: four 2 s spells of 30 fps in ~12 min.
+# Also the onboard recorder's timestamp clamp from the gs19 playback work.
+# No wire change: pairs with gs17, gs18 and gs19. The bundle changed, so the
+# first start refreshes /etc/mabur.toml once (calibration, hand-set floor
+# and camera preset carried; a hand-set max_kbps is not).
+MABUR_VERSION = 47649d44461e9d8e77f4a2650babe10b36b633eb
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
