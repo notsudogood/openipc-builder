@@ -136,7 +136,15 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # venc.sensor_crop / the Camera tab's "Crop 60": 1080p60 from the IMX415's
 # unbinned 2816x1584 crop (waybeam's driver). No wire change; a gs16 GS
 # just does not show the fifth preset.
-MABUR_VERSION = 2fb591ebf74bb4dfd415050d267bd2189180f1d4
+# 9821c817 (2026-11-01, d19): + the Telem floor block (0xE1, after the CRC:
+# an older GS ignores it) that gs18's first-boot calibration reads; the
+# learned floor fsynced when saved; a new image keeps the Camera tab's
+# preset (S00mabur refresh, checked by the new maburd --check-config, else
+# the default picture); linkbench-tx --nss 2 (bench only). No RC_VERSION
+# change: d19 pairs with gs17 and gs18. The bundle changed, so the first
+# start refreshes /etc/mabur.toml once (calibration, a hand-set floor and
+# now the camera preset carried; /etc/mabur.igi_floor untouched).
+MABUR_VERSION = 9821c8175cf2f6c4b646181a1087945809bfcfdc
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO

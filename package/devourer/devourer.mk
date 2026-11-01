@@ -47,7 +47,11 @@ DEVOURER_SITE = https://github.com/notsudogood/devourer
 # 925530d (2026-10-31, d18): + IRtlRadio::SetWideTxIgiFloor, the wide-TX
 # IGI floor set at runtime (mabur's per-unit learner); the first wide frame
 # now arms the floor whatever its value (0 writes nothing).
-DEVOURER_VERSION = 925530dc4bcbb40f4fe1e77fa7e98ea604bcab99
+# 464e8a4 (2026-11-01, d19): + with tuning.spur_ext_8822e (mabur
+# radio.spur_ext, off by default), the upper 80 MHz blocks' second spike
+# (5800 MHz in 149-161, 5880 in 165-177) gets a CSI-mask weight too, and
+# the mask clean covers that entry. Untested on air.
+DEVOURER_VERSION = 464e8a405fc906fccb558d09dc5e1e4764e91069
 DEVOURER_SITE_METHOD = git
 DEVOURER_LICENSE = GPL-2.0
 DEVOURER_LICENSE_FILES = LICENSE
