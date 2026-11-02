@@ -1,0 +1,92 @@
+# SSC378QE (SigmaStar Infinity6C, one Cortex-A core) + IMX415 + RTL8812EU:
+# a mabur air unit on a board no one here has named yet, so "generic".
+# Everything below the OpenIPC section mirrors OpenIPC/builder's own
+# ssc378qe_wfbng_defconfig (toolchain, kernel, DTB), which is the config
+# known to boot this SoC. UNTESTED ON HARDWARE: docs/ssc378qe-first-flash.md.
+
+# Architecture
+BR2_arm=y
+BR2_cortex_a35=y
+BR2_ARM_FPU_NEON_VFPV4=y
+BR2_ARM_INSTRUCTIONS_THUMB2=y
+
+# Toolchain -- musl, like every OpenIPC infinity6c image (the SSC338Q images
+# are glibc). maburd and waybeam both build on it (checked 2026-11-02).
+BR2_TOOLCHAIN_EXTERNAL=y
+BR2_TOOLCHAIN_EXTERNAL_CUSTOM=y
+BR2_TOOLCHAIN_EXTERNAL_DOWNLOAD=y
+BR2_TOOLCHAIN_EXTERNAL_URL="https://github.com/openipc/firmware/releases/download/$(OPENIPC_TOOLCHAIN).tgz"
+BR2_TOOLCHAIN_EXTERNAL_CUSTOM_PREFIX="arm-openipc-linux-musleabihf"
+BR2_TOOLCHAIN_EXTERNAL_HEADERS_5_10=y
+BR2_TOOLCHAIN_EXTERNAL_CUSTOM_MUSL=y
+BR2_TOOLCHAIN_EXTERNAL_CXX=y
+
+# Kernel 5.10.61 (the SSC338Q runs 4.9.84). The DTB is the vendor demo
+# board's, as in OpenIPC's ssc378qe configs: a real board may need its own
+# (UART, SD, USB port routing) -- the first thing to revisit once the board
+# is known.
+BR2_LINUX_KERNEL=y
+BR2_LINUX_KERNEL_CUSTOM_TARBALL=y
+BR2_LINUX_KERNEL_CUSTOM_TARBALL_LOCATION="https://github.com/openipc/linux/archive/$(OPENIPC_KERNEL).tar.gz"
+BR2_LINUX_KERNEL_USE_CUSTOM_CONFIG=y
+BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE="$(EXTERNAL_VENDOR)/board/$(OPENIPC_SOC_FAMILY)/infinity6c-ssc027d.config"
+BR2_LINUX_KERNEL_UIMAGE=y
+BR2_LINUX_KERNEL_XZ=y
+BR2_PACKAGE_LINUX_PATCHER_SIGMASTAR_DTB="infinity6c-ssc027d-s01a-demo"
+
+# Filesystem. XZ, not the SSC338Q images' LZO: this kernel config has
+# CONFIG_SQUASHFS_XZ only, and an unmountable rootfs is the failure mode.
+BR2_PACKAGE_BUSYBOX_CONFIG="$(BR2_EXTERNAL)/package/busybox/busybox.config"
+BR2_PACKAGE_UBOOT_TOOLS=y
+BR2_PACKAGE_ZLIB=y
+# BR2_PACKAGE_IFUPDOWN_SCRIPTS is not set
+BR2_TARGET_ROOTFS_SQUASHFS=y
+BR2_TARGET_ROOTFS_SQUASHFS4_XZ=y
+
+# OpenIPC
+BR2_OPENIPC_SOC_VENDOR="sigmastar"
+BR2_OPENIPC_SOC_MODEL="ssc378qe"
+BR2_OPENIPC_SOC_FAMILY="infinity6c"
+BR2_OPENIPC_VARIANT="fpv"
+# 16 MB NOR assumed (every FPV SSC378QE config upstream says 16); OpenIPC's
+# generic ssc378qe_lite says 8. Check `cat /proc/mtd` on the board.
+BR2_OPENIPC_FLASH_SIZE="16"
+
+# Packages. maburd WITHOUT its folded-in encoder: that core is the SSC338Q's
+# pipeline (VPE, infinity6e MI ABI). The camera and encoder here are
+# waybeam_venc's Maruko backend as a separate process, feeding maburd over
+# the frame-shm ring and taking its asks over HTTP (mabur
+# docs/ssc378qe-target.md).
+BR2_PACKAGE_MABUR=y
+BR2_PACKAGE_MABUR_RADIO_8812EU=y
+# BR2_PACKAGE_MABUR_INPROC_VENC is not set
+# The flight-controller UART is a guess until the board is known: ttyS2 is
+# the URLLC AIO's. Edit [msp] serial in /etc/mabur.toml on the device to
+# try another.
+BR2_PACKAGE_MABUR_MSP_SERIAL="/dev/ttyS2"
+BR2_PACKAGE_WAYBEAM_VENC=y
+BR2_PACKAGE_SIGMASTAR_OSDRV_INFINITY6C=y
+# ipcinfo: load_sigmastar's sensor probe when the env does not pin one.
+BR2_PACKAGE_IPCTOOL=y
+BR2_PACKAGE_DROPBEAR_OPENIPC=y
+# curl + TLS: /usr/sbin/sysupgrade, the remote recovery route.
+BR2_PACKAGE_LIBCURL_OPENIPC=y
+BR2_PACKAGE_LIBCURL_OPENIPC_CURL=y
+# BR2_PACKAGE_LIBCURL_OPENIPC_PROXY_SUPPORT is not set
+# BR2_PACKAGE_LIBCURL_OPENIPC_COOKIES_SUPPORT is not set
+# BR2_PACKAGE_LIBCURL_OPENIPC_EXTRA_PROTOCOLS_FEATURES is not set
+BR2_PACKAGE_MBEDTLS_OPENIPC=y
+
+# Deliberately off, as on the SSC338Q images: the radio is driven from
+# userspace by devourer inside maburd, so no Realtek kernel module may
+# load; and majestic off is what makes sigmastar-osdrv-infinity6c install
+# the MI libraries waybeam dlopens (its .mk installs them only then).
+BR2_PACKAGE_MAJESTIC=n
+BR2_PACKAGE_MAJESTIC_FONTS=n
+BR2_PACKAGE_MAJESTIC_WEBUI=n
+BR2_PACKAGE_ADAPTIVE_LINK=n
+BR2_PACKAGE_FPVD=n
+BR2_PACKAGE_WIFIBROADCAST_NG=n
+BR2_PACKAGE_RTL88X2EU_OPENIPC=n
+BR2_PACKAGE_RTL8812AU_OPENIPC=n
+BR2_PACKAGE_RTL8733BU_OPENIPC=n

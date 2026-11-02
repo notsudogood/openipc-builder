@@ -1,0 +1,77 @@
+#!/bin/sh
+# waybeam_venc, the camera + encoder for maburd on the SSC378QE: its own
+# process, publishing whole H.265 frames into the frame-shm ring maburd
+# reads (/dev/shm/mabur_f) and taking maburd's bitrate/fps/keyframe asks on
+# its HTTP API (127.0.0.1:80). Runs right after S00mabur: maburd itself
+# insmods the MI stack (load_sigmastar) under its radio bring-up, so this
+# script waits for the unified `mi` module and a sensor driver to be live
+# before the first start, then respawns like S00mabur does.
+DAEMON=${WAYBEAM_DAEMON:-/usr/bin/waybeam}
+LOG=/tmp/waybeam.log
+LOG_MAX=$((2 * 1024 * 1024))
+PIDFILE=/var/run/waybeam-loop.pid
+
+live() { [ "$(cat /sys/module/$1/initstate 2>/dev/null)" = "live" ]; }
+sensor_live() {
+	for d in /sys/module/sensor_*; do
+		n=${d##*/}
+		[ "$n" = "sensor_config" ] && continue   # the detect-time helper
+		live "$n" && return 0
+	done
+	return 1
+}
+
+loop() {
+	# Up to 30 s for the modules, then start anyway and let waybeam say
+	# what is missing (its MI init fails loudly and the loop retries).
+	i=0
+	while ! { live mi && sensor_live; }; do
+		i=$((i + 1))
+		[ $i -ge 30 ] && { echo "waybeam: MI modules not live after 30 s, starting anyway" >&2; break; }
+		sleep 1
+	done
+	while true; do
+		# Truncate on every (re)start: /tmp is RAM-backed.
+		: > "$LOG"
+		"$DAEMON" >> "$LOG" 2>&1
+		echo "waybeam exited ($?) - respawn in 2s" >&2
+		sleep 2
+	done
+}
+
+logwatch() {
+	while true; do
+		sleep 60
+		if [ "$(stat -c %s "$LOG" 2>/dev/null || echo 0)" -gt "$LOG_MAX" ]; then
+			: > "$LOG"
+			echo "waybeam: log exceeded $LOG_MAX bytes - truncated" >> "$LOG"
+		fi
+	done
+}
+
+running() { [ -f "$1" ] && kill -0 "$(cat "$1")" 2>/dev/null; }
+
+case "$1" in
+	start)
+		running "$PIDFILE" && exit 0
+		loop &
+		echo $! > "$PIDFILE"
+		logwatch &
+		;;
+	stop)
+		[ -f "$PIDFILE" ] && kill "$(cat "$PIDFILE")" 2>/dev/null
+		rm -f "$PIDFILE"
+		# waybeam forks a respawn child (waybeam-resp) and a watchdog
+		# (waybeam-wd) on its own restarts: all three names.
+		killall waybeam waybeam-resp waybeam-wd 2>/dev/null
+		;;
+	restart)
+		"$0" stop
+		sleep 1
+		"$0" start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+		;;
+esac

@@ -1,0 +1,95 @@
+{
+  "_comment": "waybeam_venc (Maruko) as maburd's encoder on the SSC378QE image. video0.fps / size / sliceCount must match /etc/mabur.toml [venc] fps / size / slices (60, 1920x1080, 3). gopSize 1092 s = 65520 frames at 60 fps: mabur's own 'no periodic keyframe' sentinel is 65535 frames, and waybeam reads gopSize 0 as a GOP of ONE frame. overclockLevel 0: no CPU overclock. maburd sets the bitrate live over the HTTP API; the 8192 here is the pre-link value. See mabur docs/ssc378qe-target.md.",
+  "system": {
+    "webPort": 80,
+    "overclockLevel": 0,
+    "verbose": false
+  },
+  "sensor": {
+    "index": -1,
+    "mode": -1
+  },
+  "isp": {
+    "sensorBin": "/etc/sensors/imx415.bin",
+    "aeEngine": "sdk",
+    "aeFps": 15,
+    "gainMax": 0,
+    "gainMin": 0,
+    "shutterMinUs": 0,
+    "awbMode": "auto",
+    "awbCt": 5500,
+    "keepAspect": true
+  },
+  "image": {
+    "mirror": false,
+    "flip": false,
+    "rotate": 0
+  },
+  "video0": {
+    "rcMode": "cbr",
+    "fps": 60,
+    "size": "1920x1080",
+    "bitrate": 8192,
+    "gopSize": 1092,
+    "qpDelta": -12,
+    "sceneThreshold": 0,
+    "sceneHoldoff": 2,
+    "sliceCount": 3,
+    "resilience": "off",
+    "intraRefreshQp": 0,
+    "zoomX": 0.5,
+    "zoomY": 0.5,
+    "framing": "off"
+  },
+  "outgoing": {
+    "enabled": true,
+    "server": "frame-shm://mabur_f",
+    "streamMode": "rtp",
+    "maxPayloadSize": 1400,
+    "connectedUdp": true,
+    "audioPort": 5601,
+    "sidecarPort": 5602
+  },
+  "discovery": {
+    "enabled": false,
+    "serviceType": "_waybeam-venc._tcp",
+    "name": "",
+    "bareAlias": true
+  },
+  "fpv": {
+    "roiEnabled": false,
+    "roiQp": -20,
+    "roiSteps": 2,
+    "roiCenter": 0.4,
+    "noiseLevel": 0
+  },
+  "audio": {
+    "enabled": false,
+    "sampleRate": 48000,
+    "channels": 1,
+    "codec": "opus",
+    "volume": 80,
+    "mute": false
+  },
+  "imu": {
+    "enabled": false,
+    "i2cDevice": "/dev/i2c-1",
+    "i2cAddr": "0x68",
+    "sampleRateHz": 200,
+    "gyroRangeDps": 1000,
+    "calFile": "/etc/imu.cal",
+    "calSamples": 400
+  },
+  "record": {
+    "enabled": false
+  },
+  "snapshot": {
+    "enabled": false
+  },
+  "detect": {
+    "enabled": false
+  },
+  "debug": {
+    "showOsd": false
+  }
+}

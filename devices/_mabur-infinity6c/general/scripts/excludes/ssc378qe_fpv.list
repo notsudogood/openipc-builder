@@ -1,0 +1,32 @@
+/etc/sensors/gc4653.bin
+/etc/sensors/imx335.bin
+/etc/sensors/os04a10.bin
+/etc/sensors/sc401ai.bin
+/etc/sensors/sc830ai.bin
+#
+/lib/modules/5.10.61/sigmastar/sensor_gc4653_mipi.ko
+/lib/modules/5.10.61/sigmastar/sensor_imx335_mipi.ko
+/lib/modules/5.10.61/sigmastar/sensor_os04a10_mipi.ko
+/lib/modules/5.10.61/sigmastar/sensor_sc401ai_mipi.ko
+/lib/modules/5.10.61/sigmastar/sensor_sc430ai_mipi.ko
+/lib/modules/5.10.61/sigmastar/sensor_sc4336p_mipi.ko
+/lib/modules/5.10.61/sigmastar/sensor_sc450ai_mipi.ko
+/lib/modules/5.10.61/sigmastar/sensor_sc501ai_mipi.ko
+/lib/modules/5.10.61/sigmastar/sensor_sc830ai_mipi.ko
+/lib/modules/5.10.61/sigmastar/sensor_sc850sl_mipi.ko
+#
+# MI libraries waybeam's Maruko backend never opens (maruko_mi.c dlopens
+# sys, vif, sensor, venc, isp, scl, ai, cam_os_wrapper, mi_common, ispalgo,
+# cus3a and rgn; ive only with framing = "stab", which this image builds
+# without). Kept: everything on that list.
+/usr/lib/libMD_LINUX.so
+/usr/lib/libmi_ao.so
+/usr/lib/libmi_ipu.so
+/usr/lib/libmi_iqserver.so
+/usr/lib/libmi_ive.so
+/usr/lib/libmi_shadow.so
+/usr/lib/libmi_vdf.so
+#
+# The MI stack is loaded by maburd (load_sigmastar -i from S00mabur, as on
+# the SSC338Q); the stock S70vendor must not run it a second time.
+/etc/init.d/S70vendor

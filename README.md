@@ -17,6 +17,8 @@ _(based on Buildroot)_
 ```
 OpenIPC URLLC AIO        SSC338Q      IMX415    RTL8812EU_USB    NOR_16M   done
 EMAX Wyvern Link Alpha   SSC338Q      IMX415    RTL8812CU_USB    NOR_16M   untested
+(board not yet named)    SSC378QE     IMX415    RTL8812EU_USB    NOR_16M?  built blind, never booted
+                                                                           -- docs/ssc378qe-first-flash.md
 ```
 
 

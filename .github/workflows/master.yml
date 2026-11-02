@@ -31,6 +31,7 @@ jobs:
         platform:
           - ssc338q_fpv_openipc-urllc-aio
           - ssc338q_fpv_emax-wyvern-link-alpha
+          - ssc378qe_fpv_generic-imx415-8812eu
 
     steps:
       - name: Checkout source
@@ -45,6 +46,15 @@ jobs:
           if [ -z ${INPUT} ] || [ ${INPUT} = ${MATRIX} ]; then
             echo RUN=${MATRIX} >> ${GITHUB_ENV}
           fi
+          # The SSC378QE board releases under its own tag: it is a
+          # different SoC on a different mabur arrangement (the encoder as
+          # waybeam's process), untested on hardware, and must not land in
+          # the drones' d-series release. Dispatch with platform=ssc378qe to
+          # build it alone; platform=ssc338q builds the two drone boards.
+          case ${MATRIX} in
+            ssc378qe) echo RELEASE_TAG=efficient-link-i6c-a1 >> ${GITHUB_ENV} ;;
+            *)        echo RELEASE_TAG=${TAG_NAME} >> ${GITHUB_ENV} ;;
+          esac
 
       - name: Setup ccache
         if: env.RUN
@@ -130,7 +140,7 @@ jobs:
         if: env.NORFW || env.NANDFW
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{env.TAG_NAME}}
+          tag_name: ${{env.RELEASE_TAG}}
           body_path: ${{env.NOTES}}
           target_commitish: ${{github.sha}}
           files: |
@@ -141,7 +151,7 @@ jobs:
       - name: Send binary
         if: env.NORFW
         run: |
-          TG_MSG="Commit: ${GIT_HASH}\nBranch: ${GIT_BRANCH}\nTag: ${TAG_NAME}\nTime: ${TIME}\n\n"
+          TG_MSG="Commit: ${GIT_HASH}\nBranch: ${GIT_BRANCH}\nTag: ${RELEASE_TAG}\nTime: ${TIME}\n\n"
           TG_ICON="\xE2\x9C\x85 GitHub Actions"
           TG_HEADER=$(echo -e ${TG_MSG}${TG_ICON})
           TG_TOKEN=${{secrets.TELEGRAM_TOKEN_BOT_OPENIPC}}

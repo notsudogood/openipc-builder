@@ -153,7 +153,13 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # No wire change: pairs with gs17, gs18 and gs19. The bundle changed, so the
 # first start refreshes /etc/mabur.toml once (calibration, hand-set floor
 # and camera preset carried; a hand-set max_kbps is not).
-MABUR_VERSION = 47649d44461e9d8e77f4a2650babe10b36b633eb
+# 0b898e77 (2026-11-02, for the SSC378QE board): maburd can be built
+# without its in-process encoder (MABUR_INPROC_VENC=OFF, Config.in): it
+# then reads waybeam_venc's frame-shm ring (format v2 accepted) and drives
+# that encoder over HTTP; mi_ready takes the infinity6c unified `mi`
+# module. On the SSC338Q boards the option defaults ON and nothing changes
+# (not rebuilt: d20 stays d20 until the next drone build).
+MABUR_VERSION = 0b898e77ac4382b096a24d78858e7476e66109a6
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
@@ -214,6 +220,28 @@ else
 MABUR_CONF_OPTS += -DDEVOURER_JAGUAR3_8822C=OFF -DDEVOURER_JAGUAR3_8822E=ON
 endif
 
+# The encoder: in maburd (the SSC338Q images) or waybeam_venc's own process
+# (the SSC378QE image; package/waybeam-venc, mabur docs/ssc378qe-target.md).
+# Without the in-process core two bundle keys change for this image:
+# [venc] slices 4 -> 3, the one slice count at 1080 lines where waybeam's
+# 32-row split and mabur's 64-row stamp land on the same boundaries (both
+# give 6 CTU rows per slice; 4 would give waybeam 9 half-rows against
+# mabur's 10); and sensor_bin -> the infinity6c ISP tuning file the osdrv
+# package installs (unused by maburd here, but the key must name a file
+# that exists on the image). waybeam.json's fps/size/sliceCount are the
+# other half of the same contract.
+ifeq ($(BR2_PACKAGE_MABUR_INPROC_VENC),y)
+MABUR_CONF_OPTS += -DMABUR_INPROC_VENC=ON
+else
+MABUR_CONF_OPTS += -DMABUR_INPROC_VENC=OFF
+define MABUR_EXT_VENC_CONFIG
+	$(SED) 's|^slices\([[:space:]]*\)= 4|slices\1= 3|' $(TARGET_DIR)/etc/mabur.toml
+	grep -q '^slices[[:space:]]*= 3' $(TARGET_DIR)/etc/mabur.toml
+	$(SED) 's|^sensor_bin\([[:space:]]*\)= "[^"]*"|sensor_bin\1= "/etc/sensors/imx415.bin"|' $(TARGET_DIR)/etc/mabur.toml
+	grep -q '^sensor_bin[[:space:]]*= "/etc/sensors/imx415.bin"' $(TARGET_DIR)/etc/mabur.toml
+endef
+endif
+
 # Config, init script and binary all come from the same floating master
 # checkout, which is the whole point: an unknown key fails boot and the wrapper
 # then respawns maburd forever at 2 s, so the three must never be mixed across
@@ -244,6 +272,7 @@ define MABUR_INSTALL_TARGET_CMDS
 	# than shipping the wrong port silently.
 	$(SED) 's|^serial\([[:space:]]*\)= "[^"]*"|serial\1= "$(call qstrip,$(BR2_PACKAGE_MABUR_MSP_SERIAL))"|' $(TARGET_DIR)/etc/mabur.toml
 	grep -q '^serial[[:space:]]*= "$(call qstrip,$(BR2_PACKAGE_MABUR_MSP_SERIAL))"' $(TARGET_DIR)/etc/mabur.toml
+	$(MABUR_EXT_VENC_CONFIG)
 endef
 
 $(eval $(cmake-package))

@@ -38,6 +38,20 @@ config BR2_PACKAGE_MABUR_RADIO_8812CU
 
 endchoice
 
+config BR2_PACKAGE_MABUR_INPROC_VENC
+	bool "In-process SigmaStar encoder (SSC338Q)"
+	default y
+	help
+	  maburd drives the camera and H.265 encoder itself through the
+	  infinity6e MI libraries (waybeam's star6e pipeline folded in).
+	  The SSC338Q images. Say n on an SSC378QE (infinity6c) image: that
+	  SDK has no VPE and a different MI ABI, so there the encoder is
+	  waybeam_venc's Maruko backend as a separate process
+	  (BR2_PACKAGE_WAYBEAM_VENC), feeding maburd over the frame-shm
+	  ring and taking its bitrate/fps/keyframe asks over HTTP. Without
+	  the in-process encoder maburd has no Camera-tab presets, no
+	  onboard (VTX) recording and no phase-lock sensor steering.
+
 config BR2_PACKAGE_MABUR_MSP_SERIAL
 	string "Flight-controller UART"
 	default "/dev/ttyS2"

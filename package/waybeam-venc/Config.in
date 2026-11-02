@@ -1,0 +1,18 @@
+config BR2_PACKAGE_WAYBEAM_VENC
+	bool "waybeam-venc (Maruko: the SSC378QE camera + encoder for maburd)"
+	default n
+	depends on BR2_PACKAGE_SIGMASTAR_OSDRV_INFINITY6C
+	help
+	  Upstream OpenIPC waybeam_venc built for its Maruko backend
+	  (SigmaStar Infinity6C: SSC378QE), as its own process. It drives
+	  the sensor, ISP and H.265 encoder through the MI libraries
+	  sigmastar-osdrv-infinity6c installs, publishes whole encoded
+	  frames into the frame-shm ring /mabur_f, and takes its live
+	  settings (bitrate, fps, keyframe requests) over its HTTP API on
+	  127.0.0.1:80. maburd built with BR2_PACKAGE_MABUR_INPROC_VENC=n
+	  is the consumer of both.
+
+	  Only for the SSC378QE images: the SSC338Q images carry mabur's
+	  folded-in encoder and must not select this.
+
+	  https://github.com/OpenIPC/waybeam_venc
