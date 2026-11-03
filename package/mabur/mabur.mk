@@ -159,7 +159,18 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # that encoder over HTTP; mi_ready takes the infinity6c unified `mi`
 # module. On the SSC338Q boards the option defaults ON and nothing changes
 # (not rebuilt: d20 stays d20 until the next drone build).
-MABUR_VERSION = 0b898e77ac4382b096a24d78858e7476e66109a6
+# 31fb0250 (2026-11-03, d21): radio.wide_igi_floor = 53 (0x35) in code and
+# bundle again, was -1 (the d18 learner): in flights 0019-0021 the learner
+# never stepped while 7.8 % of strong-signal MCS3/40 frames left the drone
+# 30-88 ms late. Every drone pays its ~1 dB uplink cost at 40/80 MHz, and
+# gs18's first-boot floor test no longer runs. The refresh carries a floor
+# only when it differs from the old image's own value, so the shipped 53 is
+# not mistaken for a hand-set one. Rides along: the SSC378QE pieces above
+# (inert here) and gs20's GS-side down_mcs_cap. No wire change: pairs with
+# gs19 and gs20. The bundle changed, so the first start refreshes
+# /etc/mabur.toml once (calibration, a hand-set floor and the camera
+# preset carried).
+MABUR_VERSION = 31fb025026da8c7f68a5a05e63ce47bf75f343d5
 MABUR_SITE_METHOD = git
 MABUR_LICENSE = MIT
 MABUR_SUPPORTS_IN_SOURCE_BUILD = NO
