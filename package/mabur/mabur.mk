@@ -166,8 +166,8 @@ MABUR_SITE = https://github.com/notsudogood/mabur
 # gs18's first-boot floor test no longer runs. The refresh carries a floor
 # only when it differs from the old image's own value, so the shipped 53 is
 # not mistaken for a hand-set one. Rides along: the SSC378QE pieces above
-# (inert here) and gs20's GS-side down_mcs_cap. No wire change: pairs with
-# gs19 and gs20. The bundle changed, so the first start refreshes
+# (inert here) and the GS-side down_mcs_cap. No wire change: pairs with
+# gs19 and gs21 (gs20 was cancelled mid-build and folded into gs21). The bundle changed, so the first start refreshes
 # /etc/mabur.toml once (calibration, a hand-set floor and the camera
 # preset carried).
 MABUR_VERSION = 31fb025026da8c7f68a5a05e63ce47bf75f343d5
